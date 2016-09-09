@@ -9,4 +9,5 @@ let Is={
 	array(v) { return v instanceof Array; },
 	date(v) { return typeof v==='object' && v instanceof Date; },
 	elem(v) { return v instanceof Element; },
+	event(v) { return !Is.void(v) && event.hasOwnProperty('originalEvent'); },
 }
