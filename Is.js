@@ -1,7 +1,8 @@
 let Is={
 	undef(v) { return typeof v === 'undefined'; },
 	void(v) { return typeof v === 'undefined' || v===null; },
-	number(v) { return typeof v==='number' },
+	number(v) { return typeof v==='number'; },
+	integer(v) { return Number.isInteger(v); },
 	string(v) { return typeof v==='string' },
 	bool(v) { return typeof v==='boolean' },
 	symbol(v) { return typeof v==='symbol' },
