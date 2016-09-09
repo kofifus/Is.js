@@ -5,7 +5,7 @@ let Is={
 	string(v) { return typeof v==='string' },
 	bool(v) { return typeof v==='boolean' },
 	symbol(v) { return typeof v==='symbol' },
-	dict(v) { return !Is.void(v) && typeof v==='object' !Is.array(v) && !(v instanceof Date); },
+	dict(v) { return !Is.void(v) && typeof v==='object' && !Is.array(v) && !(v instanceof Date); },
 	array(v) { return v instanceof Array; },
 	date(v) { return typeof v==='object' && v instanceof Date; },
 	elem(v) { return v instanceof Element; },
