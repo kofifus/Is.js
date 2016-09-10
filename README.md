@@ -1,2 +1,3 @@
-# Is.js
-Easy javascript type recognition
+# contract.js
+
+Javascript assert and type recognition
