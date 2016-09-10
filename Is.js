@@ -28,17 +28,17 @@ let Is={
 		else {
 			let stack=(Is.assert._regExp ?  (new Error()).stack.split('\n')  : []), stackMsg=(stack.length>2 ? (new Error()).stack.split('\n')[2].replace(Is.assert._regExp, 'at $1' ) :  '');
 			if (Is.int(conds[0])) { 
-				if (conds[0]!==-1 && conds[0] !==arguments.length) msg='Assert failed - invalid arguments count '+stackMsg;
+				if (conds[0]!==-1 && conds[0] !==conds.length-1) msg='Assert failed - invalid arguments count '+stackMsg;
 			} else if (Is.arr(conds[0])) {
 				if (! conds[0].every(argNum => Is.int(argNum))) msg='Assert failed - invalid arguments array '+stackMsg;
-				else if (conds[0].indexOf(arguments.length)===-1) msg='Assert failed - invalid arguments count '+stackMsg; 
+				else if (conds[0].indexOf(conds.length-1)===-1) msg='Assert failed - invalid arguments count '+stackMsg; 
 			} else {
 				msg='Assert failed - invalid arguments parameter '+stackMsg;
 			}
 
 			if (!msg) {
 				conds.shift();
-				if (!msg && ! conds.every(cond => Is.bool(cond))) msg='Assert failed - invalid args '+stackMsg;
+				if (! conds.every(cond => Is.bool(cond))) msg='Assert failed - invalid args '+stackMsg;
 				if (!msg && ! conds.every(cond => { return cond; })) msg='Assert failed '+stackMsg;
 			}
 		}
