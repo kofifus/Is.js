@@ -15,6 +15,7 @@ let Is={
 	event(v) { return v instanceof Event; },
 }
 
+// assert
 Is.assert = (...conds) => {
 	if (Is.assert._level==='silent') return;
 
@@ -29,7 +30,7 @@ Is.assert = (...conds) => {
 	if (conds.length!==1 || !Is.bool(cond=conds[0])) msg='Assert failed - invalid arguments';
 	else if (cond==='__throw') Is.assert._level=null;
 	else if (cond==='__console') Is.assert._level='console';
-	else if (cond==='__silent') Is.assert._level='silent';
+	else if (cond==='__disable') Is.assert._level='silent';
 	else if (! conds.every(cond => { return cond; })) msg='Assert failed '+Is.assert._parse((new Error()).stack);
 	
 	if (msg) { if (!Is.assert._level) throw msg; else if (console) console.log(msg); }
