@@ -23,6 +23,7 @@ Is.assert = (...conds) => {
 		let stack=(new Error()).stack;
 		if (stack && stack[0]==='E') Is.assert._parse=(s => s.split('\n')[2].replace(/^(?:\s+at\s)(.+?)$/g, 'at $1')); // chrome
 		else if (stack && stack[0]==='I') Is.assert._parse=(s => s.split('\n')[1].replace(/^(.+?)@(.+?)$/g, 'at $1 ($2)')); // firefox
+		else if (stack && stack[0]==='g') Is.assert._parse=(s => s.split('\n')[0].replace(/^(.+?)@(.+?)$/g, 'at $1 ($2)')); // safari
 		else Is.assert._parse=(stack => ''); // can't parse
 	}
 
