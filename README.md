@@ -29,6 +29,7 @@ Assert:
       Is.assert(arguments.length===2 && Is.int(x) && Is.str(y));
       console.log('f ok');
     }
+    
     //f(100, 'str'); // logs: 'f ok'
     f(100, 200); // throws: 'Assert failed at f (Assert failed at f (https://run.plnkr.co/aaFFrVzDe6dD0vYV/script.js:6:6)'
     f(100); // throws: 'Assert failed at f (Assert failed at f (https://run.plnkr.co/aaFFrVzDe6dD0vYV/script.js:6:6)'
