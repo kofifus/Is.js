@@ -1,3 +1,6 @@
+"use strict";
+(function(global) {
+  
 let Is={
 	obj(v) { return typeof v !== 'undefined'; },
 	undef(v) { return typeof v === 'undefined'; },
@@ -36,3 +39,6 @@ Is.assert = (...conds) => {
 	
 	if (msg) { if (!Is.assert._level) throw msg; else if (console) console.log(msg); }
 }
+
+global.Is=Is;
+}(this));
