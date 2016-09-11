@@ -15,20 +15,22 @@ let Is={
 	event(v) { return v instanceof Event; },
 }
 
-// assert
 Is.assert = (...conds) => {
 	if (Is.assert._level==='silent') return;
-	if (typeof Is.assert._regExp==='undefined') Is.assert._regExp=((new Error()).stack ? /^(?:\s+at\s)(.+?)$/g : null);
+
+	if (typeof Is.assert._parse==='undefined') {
+		let stack=(new Error()).stack;
+		if (stack && stack[0]==='E') Is.assert._parse=(s => s.split('\n')[2].replace(/^(?:\s+at\s)(.+?)$/g, 'at $1')); // chrome
+		else if (stack && stack[0]==='I') Is.assert._parse=(s => s.split('\n')[1].replace(/^(.+?)@(.+?)$/g, 'at $1 ($2)')); // firefox
+		else Is.assert._parse=(stack => ''); // can't parse
+	}
 
 	let cond, msg;
 	if (conds.length!==1 || !Is.bool(cond=conds[0])) msg='Assert failed - invalid arguments';
 	else if (cond==='__throw') Is.assert._level=null;
 	else if (cond==='__console') Is.assert._level='console';
 	else if (cond==='__silent') Is.assert._level='silent';
-	else {
-		let stack=(Is.assert._regExp ?  (new Error()).stack.split('\n')  : []), stackMsg=(stack.length>2 ? (new Error()).stack.split('\n')[2].replace(Is.assert._regExp, 'at $1' ) :  '');
-		if (! conds.every(cond => { return cond; })) msg='Assert failed '+stackMsg;
-	}
-
+	else if (! conds.every(cond => { return cond; })) msg='Assert failed '+Is.assert._parse((new Error()).stack);
+	
 	if (msg) { if (!Is.assert._level) throw msg; else if (console) console.log(msg); }
 }
