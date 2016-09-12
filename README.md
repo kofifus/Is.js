@@ -2,6 +2,7 @@
 
 # Javascript assert and type recognition
 
+<br />
 **Background**
 
 [Design by contract](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typeless languages like Javascript which puts no restriction on the arguments passed to functions.
@@ -40,8 +41,8 @@ Assert(cond) can be called as follows:
     Is.date(v)		true iff v is a date
     Is.elem(v)		true iff v is an HTML element
     Is.event(v)		true iff v is an HTML event
-<br />
 
+<br />
 **Eample**
 
     <script src="https://cdn.rawgit.com/kofifus/Is.js/master/Is.min.js"></script>
@@ -88,6 +89,7 @@ Assert(cond) can be called as follows:
     } catch(e) {
     	alert(e);
     }
+
 <br />
 **Demo**
 
