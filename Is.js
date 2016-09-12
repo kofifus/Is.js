@@ -19,7 +19,6 @@ let Is={
 	event(v) { return v instanceof Event; },
 }
 
-// assert
 let Assert = (cond) => {
 	if (Assert._level==='disabe') return;
 	
