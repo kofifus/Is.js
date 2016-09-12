@@ -1,5 +1,6 @@
-"use strict";
 (function(global) {
+"use strict";
+
   
 let Is={
 	obj(v) { return typeof v !== 'undefined'; },
@@ -19,26 +20,29 @@ let Is={
 }
 
 // assert
-Is.assert = (...conds) => {
-	if (Is.assert._level==='silent') return;
+Is.assert = (cond) => {
+	if (Is.assert._level==='disabe') return;
+	
+	function getStack() { return (new Error()).stack; }
 
 	if (typeof Is.assert._parse==='undefined') {
-		let stack=(new Error()).stack;
+		let stack=getStack();
 		if (stack && stack[0]==='E') Is.assert._parse=(s => s.split('\n')[2].replace(/^(?:\s+at\s)(.+?)$/g, 'at $1')); // chrome
 		else if (stack && stack[0]==='I') Is.assert._parse=(s => s.split('\n')[1].replace(/^(.+?)@(.+?)$/g, 'at $1 ($2)')); // firefox
 		else if (stack && stack[0]==='g') Is.assert._parse=(s => s.split('\n')[0].replace(/^(.+?)@(.+?)$/g, 'at $1 ($2)')); // safari
 		else Is.assert._parse=(stack => ''); // can't parse
 	}
 
-	let cond, msg;
-	if (conds.length!==1 || !Is.bool(cond=conds[0])) msg='Assert failed - invalid arguments';
-	else if (cond==='__throw') Is.assert._level=null;
+	let msg;
+	if (cond==='__throw') Is.assert._level=null;
 	else if (cond==='__console') Is.assert._level='console';
-	else if (cond==='__disable') Is.assert._level='silent';
-	else if (! conds.every(cond => { return cond; })) msg='Assert failed '+Is.assert._parse((new Error()).stack);
-	
-	if (msg) { if (!Is.assert._level) throw msg; else if (console) console.log(msg); }
-}
+	else if (cond==='__disable') Is.assert._level='disable';
+	else if (Is.bool(cond)) { if (!cond) msg='Assert failed '+Is.assert._parse((new Error()).stack); }
+	else msg='Invalid Is.assert arguments';
 
-global.Is=Is;
-}(this));
+	if (msg) { if (!Is.assert._level) throw msg; else if (console) console.log(msg); }
+};
+
+
+if (global) global.Is=Is;
+}((1,eval)('this')));
