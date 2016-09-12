@@ -4,7 +4,7 @@
 
 **Background**
 
-[Design by contract](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typless languages like Javascript which puts no restriction on the arguments passed to functions.
+[Design by contract](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typeless languages like Javascript which puts no restriction on the arguments passed to functions.
 
 <br />
 **Usage**
