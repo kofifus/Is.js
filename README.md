@@ -49,7 +49,7 @@ Assert(cond) can be called as follows:
 <br />
 **Eample**
 
-        <script src="https://rawgit.com/kofifus/contract.js/master/contract.js"></script>
+    <script src="https://rawgit.com/kofifus/contract.js/master/contract.js"></script>
         
     // Assert('__disable'); // disable asserts 
     // Assert('__console'); // log to console instead of throwing
