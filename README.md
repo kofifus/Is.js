@@ -5,7 +5,7 @@
 <br />
 **Background**
 
-[Design by contract](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typeless languages like Javascript which puts no restriction on the arguments passed to functions.
+[Contract programming](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typeless languages like Javascript which puts no restriction on the arguments passed to functions.
 
 <br />
 **Usage**
@@ -33,6 +33,7 @@ Assert(cond) can be called as follows:
     Is.num(v)		true iff v is a number
     Is.int(v)		true iff v is an integer
     Is.str(v)		true iff v is a string
+    Is.func(v)      true iff v is a function
     Is.bool(v)		true iff v is a boolean
     Is.arr(v)		true iff v is an array
     Is.regexp(v)    true iff v is a regular expression
@@ -42,34 +43,37 @@ Assert(cond) can be called as follows:
     Is.elem(v)		true iff v is an HTML element
     Is.event(v)		true iff v is an HTML event
 
+    Is.all(arr, f)  true iff f returns true for all of arr elements
+    Is.all(f, arr)  true iff f returns true for all of arr elements
+
 <br />
 **Eample**
 
-    <script src="https://cdn.rawgit.com/kofifus/Is.js/master/Is.min.js"></script>
-    
+        <script src="https://rawgit.com/kofifus/contract.js/master/contract.js"></script>
+        
     // Assert('__disable'); // disable asserts 
     // Assert('__console'); // log to console instead of throwing
     // Assert('__throw');  // go back to throwing
     
-    // toggleClass receives either an element or an element and a class name string
-    function toggleClass(elem, className) {
-    	Assert(Is.elem(elem) && (arguments.length===1 || (arguments.length===2 && Is.str(className))));
-    	alert('toggleClass ok');
+    // toggleClasses receives either an element or an element plus an array of class name strings
+    function toggleClasses(elem, classes) {
+    	Assert(Is.elem(elem) && (arguments.length===1 || (arguments.length===2 && Is.all(classes, Is.str))));
+    	alert('toggleClasses ok');
     }
     
     let div = document.createElement('div');
     
     try {
     	// correct invocations - alerts 'toggleClass ok'
-    	toggleClass(div);
-    	// toggleClass(div, 'myClass');
+    	toggleClasses(div, ['c1', 'c2']);
+    	toggleClasses(div);
     
     	// incorrect invocations - throws 'Assert failed at toggleClass (https://run.plnkr.co/XLpMfSUyfkmB9Wuf/:19:6)'
-    	toggleClass(10, 'myClass');
-    	// toggleClass(div, [1, 2]);
-    	// toggleClass(div, 'myClass', 5);
-    	// toggleClass();
-    
+    	toggleClasses(div, ['c1', 5]);
+    	// toggleClasses(10, ['c1', 'c2']);
+    	// toggleClasses(div, ['c1', 'c2'], 5);
+    	// toggleClasses();
+    	
     } catch(e) {
     	alert(e);
     }
@@ -94,5 +98,6 @@ Assert(cond) can be called as follows:
 **Demo**
 
 https://plnkr.co/edit/OVFSfEev00ZOkXD4yVDX
+
 
 
