@@ -6,7 +6,7 @@
 **Background**
 
 [Contract programming](https://en.wikipedia.org/wiki/Design_by_contract) is an important paradigm that creates safer code with early error recognition. It is especially useful in typeless languages like Javascript which puts no restriction on the number or type of arguments passed to functions.
-<br/>
+<br/><br/>
 
 **Introduction**
 
@@ -17,8 +17,8 @@ Is.js includes a set of predicates for type detection, a few predicate combinato
  - *combinators* - are functions (ie, Is.not(p), Is.or(p1, p2) ) that create new predicates out of existing ones.
  
  - *Is.Assert()* will evaluate it's arguments to true/false and if false will give a detailed msg including the function name and location. It can be called in a number of ways:<br/>
-     - Assert(string) where string is one of 'disable', 'console', 'silent' or 'throw' will change the notification method,<br/>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert('disable');`<br/>
-     - Assert(...booleans) will pass if all given booleans evaluate to true, <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert(a0>5, Is.arr(a);`<br/>
+     - Assert(string) where string is one of 'disable', 'console', 'silent' or 'throw' will change the notification method,<br/>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert('disable');`<br/><br/>
+     - Assert(...booleans) will pass if all given booleans evaluate to true, <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert(a0>5, Is.arr(a);`<br/><br/>
      - Assert(args, ...predicates) will pass if for each argument in args, the matching predicate evaluate to true. args can be either the arguments object or an array, <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert(arguments, Is.arr, Is.str);`<br/><br/>
      -      Assert(args, ...) allows combining Is predicates with any boolean values,<br/>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert(arguments, Is.regexp, a1===Document.activeElement);`<br/><br/>
      - Use  Is.default(predicate) to designate a predicate for an argument that may be missing from args,<br/>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ie `Is.Assert(arguments, Is.bool, Is.default(Is.bool);`<br/><br/>
