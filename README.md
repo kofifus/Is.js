@@ -16,11 +16,11 @@ Is.js includes:
  - *combinators* - are functions (ie, Is.not(p), Is.or(p1, p2) ) that create new predicates out of existing ones.<br/><br/>
  
  - *Is.assert()* - can be called in a number of ways:<br/>
-     - Is.assert(...booleans) will pass if *any* of the given booleans evaluate to true, useful for combining multiple Is.match (se below) <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(a0 > 5, Is.arr(a);`<br/><br/>
-     - Is.assert(args, ...predicates) where args is the arguments object, will return true iff for each argument in args, the matching predicate evaluate to true.  <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.arr, Is.str);`<br/><br/>
-     - Is.assert([x, y], ...predicates) passing an array instead of the arguments object is useful in arrow functions where there is no arguments object. <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert([x, y], Is.arr, Is.str);`<br/><br/>
+     - Is.assert(...booleans) will pass if *any* of the given booleans evaluate to true, useful for combining multiple Is.match (see below). <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(a0 > 5, Is.arr(a);`<br/><br/>
+     - Is.assert(args, ...predicates) where args is the arguments object, will return true iff for each argument in args, the matching predicate evaluate to true. Extra arguments will cause Is.assert to fail. <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.arr, Is.str);`<br/><br/>
+     - Is.assert([x, y], ...predicates) passing an array instead of the arguments object is useful in arrow functions where there is no arguments object (see below). <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert([x, y], Is.arr, Is.str);`<br/><br/>
      - Is.assert(args, ...) allows combining predicates with any boolean values,<br/>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.regexp, a1===someval, v => v>0 && v<3);`<br/><br/>
-     - Is.assert(args, []) or assert(args, null) will pass if args is []<br/><br/>
+     - Is.assert(args, []) and Is.assert(args, null) will pass if arguments/args have no elements<br/><br/>
      - use Is.default(predicate) to designate a predicate for an argument that may be missing from args, <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.bool, Is.default(Is.bool);`<br/><br/>
      - use Is.spread(predicate) to designate a predicate for all remaining arguments in args,
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.elem, Is.date, Is.spread(Is.func);`<br/><br/>
@@ -42,7 +42,8 @@ Is.js includes:
         Is.assert([e], Is.event); 
         ... 
     });
-    ```<br/>
+    ```
+<br/>
  - *Is.assert(method)* - sets the notification method:
 
      - `Is.assert('disable');` will disable all assertions. The performance cost of an assert in this case will be one 'if'.
@@ -89,34 +90,33 @@ Is.args(v)      true iff v is the arguments object
 
 <br /><br />
 **combinators**
-<pre>
-Is.inst(base) - returns a new predicate p(v) passing if v instanceof base
-    Is.assert(arguments, Is.inst(baseFunc)
+
+Is.inst(base) - returns a new predicate p(v) passing if v instanceof base<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.inst(baseFunc)`
+
    
-Is.arrlen(len) - returns a new predicate p(arr) passing if arr is a array of length len
-    Is.assert(arguments, Is.arrlen(5)))
+Is.arrlen(len) - returns a new predicate p(arr) passing if arr is an array of length len<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.arrlen(5)))`
 
-Is.strlen(len) - returns a new predicate p(s) passing if s is a string of length len
-    Is.assert(arguments, Is.strlen(5)))
+Is.strlen(len) - returns a new predicate p(s) passing if s is a string of length len<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.strlen(5)))`
 
-Is.not(pred) - returns a new predicate p(v) passding if !pred(v)
-    Is.assert(arguments, Is.not(Is.str))
+Is.not(pred) - returns a new predicate p(v) passding if pred(v)!==true<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.not(Is.str))`
 
-Is.or(...preds) - returns a new predicate p(v) passing if for any pred in preds, pred(v) passes
-    Is.assert(arguments, Is.or(Is.str, Is.int))
+Is.or(...preds) - returns a new predicate p(v) passing if for any pred in preds, pred(v) passes<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.or(Is.str, Is.int))`
 
-Is.and(...preds) - returns a new predicate p(v) passing if for all pred in predicates, pred(v) passes
-    Is.assert(arguments, Is.and(Is.str, s => s[0]==='x'))
+Is.and(...preds) - returns a new predicate p(v) passing if for all pred in predicates, pred(v) passes<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.and(Is.str, s => s[0]==='x'))`
 
-Is.every(pred) - returns a new predicate p(arr) passing if for all elements a of arr pred(a) passes
-    Is.assert(arguments, Is.every(Is.str))
-</pre>
-
+Is.every(pred) - returns a new predicate p(arr) passing if for all elements a of arr pred(a) passes<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;`Is.assert(arguments, Is.every(Is.str))`
 <br/><br/>
 
 **Conclusion**
 
-Is.assert provides an easy, useful and comprehensive way to assert function signatures.
+Is.assert provides an easy, useful and comprehensive way to assert function signatures ...
 
 easy as:
 ```
@@ -125,7 +125,7 @@ function f() {
     Is.assert(arguments, []); 
 }
 ```
-
+<br/>
 useful as: 
 ```
 // f receives an integer, an array of strings and an optional bool
@@ -133,7 +133,7 @@ function f(x, y, z=3) {
     Is.assert(Is.int, Is.every(Is.str), Is.default(Is.bool)); 
 }
 ```
-
+<br/>
 comprehensive as: 
 ```
 // f receives
@@ -147,7 +147,7 @@ function f(x, y, z=3) {
     );
 }
 ```
-
+<br/>
 Is predicates and assert are useful anywhere in the code:
 
 ```
