@@ -61,9 +61,9 @@ Is.js includes:
     function f(x, y) { 
         Is.assert(Is.match(Is.num), Is.match(Is.bool, Is.event)); 
     }
-    ```<br/>
+    ```
      
-<br />
+<br /><br />
 **Predicates**
 <pre>
 Is.undef(v)     true iff v is undefined
